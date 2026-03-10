@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MDP">
         <activity
+            android:name=".Confirmation_Dialog"
+            android:exported="false" />
+        <activity
             android:name=".Trigger_page"
             android:exported="false" />
         <activity
