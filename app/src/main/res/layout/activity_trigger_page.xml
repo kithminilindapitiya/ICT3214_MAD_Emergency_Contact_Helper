@@ -179,7 +179,6 @@
                         android:layout_height="60dp"
                         android:padding="2dp"
                         android:src="@android:drawable/ic_menu_report_image"
-                        app:shapeAppearanceOverlay="@style/CircleImage"
                         app:strokeColor="#FBC02D"
                         app:strokeWidth="2dp" />
 

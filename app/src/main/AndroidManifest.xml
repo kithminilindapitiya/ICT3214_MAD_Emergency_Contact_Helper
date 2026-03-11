@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MDP">
         <activity
+            android:name=".Profile"
+            android:exported="false" />
+        <activity
+            android:name=".Splash_screen"
+            android:exported="false" />
+        <activity
             android:name=".Confirmation_Dialog"
             android:exported="false" />
         <activity
