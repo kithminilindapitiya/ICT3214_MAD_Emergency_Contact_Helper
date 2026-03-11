@@ -34,49 +34,48 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         tvRegister = findViewById(R.id.tvRegister);
 
-        // Go to Register page
+        // Navigate to Register page
         tvRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            finish();
         });
 
         // Login button click
-        btnLogin.setOnClickListener(v -> {
+        btnLogin.setOnClickListener(v -> loginUser());
+    }
 
-            String email = etEmail.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
+    private void loginUser() {
 
-            // Basic validation
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(LoginActivity.this,
-                        "Please fill all fields",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
 
-            // Hash entered password
-            String hashedPassword = PasswordUtils.hashPassword(password);
+        // Basic validation
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            // Check user in database
-            boolean isValid = db.checkUser(email, hashedPassword);
+        // Hash the entered password
+        String hashedPassword = PasswordUtils.hashPassword(password);
 
-            if (isValid) {
-                Toast.makeText(LoginActivity.this,
-                        "Login Successful!",
-                        Toast.LENGTH_SHORT).show();
+        // Check user credentials in database
+        boolean isValid = db.checkUser(email, hashedPassword);
 
-                // Navigate to HomeActivity
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
+        if (isValid) {
 
-                // Close login screen
-                finish();
+            Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
 
-            } else {
-                Toast.makeText(LoginActivity.this,
-                        "Invalid email or password",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+            // Redirect to HomeActivity and pass email
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            intent.putExtra("email", email);
+            startActivity(intent);
+
+            // Close login screen
+            finish();
+
+        } else {
+
+            Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+        }
     }
 }
