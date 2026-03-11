@@ -1,3 +1,12 @@
+Authentication-Pages
+<resources>
+    <color name="primaryColor">#D32F2F</color>
+    <color name="primaryDark">#B71C1C</color>
+    <color name="accentColor">#FFCDD2</color>
+    <color name="textDark">#212121</color>
+    <color name="textLight">#757575</color>
+    <color name="white">#FFFFFF</color>
+
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
@@ -8,4 +17,5 @@
     <color name="colorTextSoft">#AAB4D4</color>
     <color name="colorAccent">#6478C8</color>
     <color name="colorEmergency">#FF7B7B</color>
+main
 </resources>

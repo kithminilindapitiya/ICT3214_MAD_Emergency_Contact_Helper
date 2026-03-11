@@ -1,9 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+Authentication-Pages
+    <style name="Base.Theme.EmergencyContactHelper" parent="Theme.Material3.DayNight.NoActionBar">
+
     <style name="Base.Theme.MDP" parent="Theme.Material3.DayNight.NoActionBar">
+main
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+Authentication-Pages
+    <style name="Theme.EmergencyContactHelper" parent="Base.Theme.EmergencyContactHelper" />
+
     <style name="Theme.MDP" parent="Base.Theme.MDP" />
+main
 </resources>
