@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,14 +33,14 @@ public class HomeActivity extends AppCompatActivity {
     private ContactAdapter contactAdapter;
     private List<EmergencyContact> contactList;
 
-    // Logged-in user info (from SharedPreferences)
+    // Logged-in user info
     private int loggedUserId;
     private String loggedUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity);
+        setContentView(R.layout.activity_home); // ✅ FIXED - was commented out
 
         initViews();
         loadUserSession();
@@ -54,13 +55,13 @@ public class HomeActivity extends AppCompatActivity {
     // 1. INITIALIZE VIEWS
     // ─────────────────────────────────────────────
     private void initViews() {
-        //tvGreeting   = findViewById(R.id.tvGreeting);
-        //tvUsername   = findViewById(R.id.tvUsername);
-        //tvAvatar     = findViewById(R.id.tvAvatar);
-        //tvSeeAll     = findViewById(R.id.tvSeeAll);
-        //rvContacts   = findViewById(R.id.rvContacts);
-        //bottomNav    = findViewById(R.id.bottomNav);
-        //dbHelper     = new DatabaseHelper(this);
+        tvGreeting   = findViewById(R.id.tvGreeting);   // ✅ FIXED - was commented out
+        tvUsername   = findViewById(R.id.tvUsername);
+        tvAvatar     = findViewById(R.id.tvAvatar);
+        tvSeeAll     = findViewById(R.id.tvSeeAll);
+        rvContacts   = findViewById(R.id.rvContacts);
+        bottomNav    = findViewById(R.id.bottomNav);
+        dbHelper     = new DatabaseHelper(this);
     }
 
     // ─────────────────────────────────────────────
@@ -71,7 +72,6 @@ public class HomeActivity extends AppCompatActivity {
         loggedUserId   = sharedPref.getInt("user_id", -1);
         loggedUsername = sharedPref.getString("username", "User");
 
-        // If no session, redirect to Login
         if (loggedUserId == -1) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -79,10 +79,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     // ─────────────────────────────────────────────
-    // 3. SETUP HEADER (Greeting + Avatar)
+    // 3. SETUP HEADER
     // ─────────────────────────────────────────────
     private void setupHeader() {
-        // Dynamic greeting based on time of day
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         String greeting;
@@ -92,33 +91,29 @@ public class HomeActivity extends AppCompatActivity {
 
         tvGreeting.setText(greeting);
         tvUsername.setText(loggedUsername + " 👋");
-
-        // Avatar = first letter of username
         tvAvatar.setText(String.valueOf(loggedUsername.charAt(0)).toUpperCase());
     }
 
     // ─────────────────────────────────────────────
     // 4. EMERGENCY CALL BUTTON
     // ─────────────────────────────────────────────
-    private <EmergencyContact> void setupEmergencyButton() {
-       findViewById(R.id.cardEmergency).setOnClickListener(v -> {
-            // Fetch the primary contact from DB
-            com.example.emergencycontacthelper.EmergencyContact primaryContact = dbHelper.getPrimaryContact(loggedUserId);
+    private void setupEmergencyButton() {
+        findViewById(R.id.cardEmergency).setOnClickListener(v -> {
+            EmergencyContact primaryContact = dbHelper.getPrimaryContact(loggedUserId);
 
             if (primaryContact == null) {
                 Toast.makeText(this,
-                        "No contacts saved yet. Please add an emergency contact first.",
+                        "No contacts saved yet. Please add a contact first.",
                         Toast.LENGTH_LONG).show();
                 return;
             }
 
-            // Show confirmation dialog before calling
             new AlertDialog.Builder(this)
                     .setTitle("🆘 Emergency Call")
-                    .setMessage("Call " + primaryContact.getClass() + " at " + primaryContact.getClass() + "?")
+                    .setMessage("Call " + primaryContact.getName() + " at " + primaryContact.getPhone() + "?")
                     .setPositiveButton("Call Now", (dialog, which) -> {
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse("tel:" + primaryContact.getClass()));
+                        callIntent.setData(Uri.parse("tel:" + primaryContact.getPhone()));
                         startActivity(callIntent);
                     })
                     .setNegativeButton("Cancel", null)
@@ -130,16 +125,13 @@ public class HomeActivity extends AppCompatActivity {
     // 5. CONTACTS RECYCLERVIEW
     // ─────────────────────────────────────────────
     private void setupContactsList() {
-        // Fetch contacts from SQLite filtered by logged-in user
         contactList = dbHelper.getContactsByUser(loggedUserId);
 
-        // Show only first 3 as preview on Home
         List<EmergencyContact> previewList = contactList.size() > 3
                 ? contactList.subList(0, 3)
                 : new ArrayList<>(contactList);
 
         contactAdapter = new ContactAdapter(this, previewList, contact -> {
-            // Quick call on contact row tap
             Intent callIntent = new Intent(Intent.ACTION_DIAL);
             callIntent.setData(Uri.parse("tel:" + contact.getPhone()));
             startActivity(callIntent);
@@ -149,33 +141,34 @@ public class HomeActivity extends AppCompatActivity {
         rvContacts.setAdapter(contactAdapter);
         rvContacts.setNestedScrollingEnabled(false);
 
-        // "See All" button
         tvSeeAll.setOnClickListener(v ->
                 startActivity(new Intent(this, ViewContactsActivity.class))
         );
     }
 
     // ─────────────────────────────────────────────
-    // 6. QUICK ACTION CARDS
+    // 6. QUICK ACTION CARDS ✅ UPDATED with new names
     // ─────────────────────────────────────────────
     private void setupQuickActionCards() {
-        // Add Contact card
-        findViewById(R.id.nav_contacts).setOnClickListener(v ->
+        // Ambulance card
+        findViewById(R.id.cardAmbulance).setOnClickListener(v -> {
+            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+            callIntent.setData(Uri.parse("tel:119")); // Ambulance number
+            startActivity(callIntent);
+        });
+
+        // First Aid card
+        findViewById(R.id.cardFirstAid).setOnClickListener(v ->
                 startActivity(new Intent(this, AddContactActivity.class))
         );
 
-        // View All card
-        findViewById(R.id.cardViewAll).setOnClickListener(v ->
+        // Hospital card
+        findViewById(R.id.cardHospital).setOnClickListener(v ->
                 startActivity(new Intent(this, ViewContactsActivity.class))
         );
 
-        // Edit Contact card
-        findViewById(R.id.nav_contacts).setOnClickListener(v ->
-                startActivity(new Intent(this, ViewContactsActivity.class)) // Edit from the list
-        );
-
-        // Settings card
-        findViewById(R.id.nav_sos).setOnClickListener(v ->
+        // Check Up card
+        findViewById(R.id.cardCheckUp).setOnClickListener(v ->
                 startActivity(new Intent(this, ProfileActivity.class))
         );
     }
@@ -184,47 +177,41 @@ public class HomeActivity extends AppCompatActivity {
     // 7. BOTTOM NAVIGATION
     // ─────────────────────────────────────────────
     private void setupBottomNavigation() {
-        bottomNav.setSelectedItemId(R.id.nav_home); // Home is active by default
+        bottomNav.setSelectedItemId(R.id.nav_home);
 
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
 
             if (id == R.id.nav_home) {
-                return true; // Already here
-
+                return true;
             } else if (id == R.id.nav_contacts) {
                 startActivity(new Intent(this, ViewContactsActivity.class));
                 return true;
-
             } else if (id == R.id.nav_sos) {
                 startActivity(new Intent(this, EmergencyTriggerActivity.class));
                 return true;
-
             } else if (id == R.id.nav_profile) {
                 startActivity(new Intent(this, ProfileActivity.class));
                 return true;
             }
-
             return false;
         });
     }
 
     // ─────────────────────────────────────────────
-    // 8. REFRESH CONTACTS when returning to Home
+    // 8. REFRESH ON RESUME
     // ─────────────────────────────────────────────
     @Override
     protected void onResume() {
         super.onResume();
-        // Refresh contact list in case user added/deleted one
         setupContactsList();
     }
 
     // ─────────────────────────────────────────────
     // 9. PREVENT GOING BACK TO LOGIN
     // ─────────────────────────────────────────────
-    //@Override
-    //public void onBackPressed() {
-        // Do nothing — user must use Logout to leave
-        // You can show a dialog here if you want
-    }
-//}
+    @Override
+    public void onBackPressed() {
+        public void onBackPressed;() {
+            super.onBackPressed();
+        }
