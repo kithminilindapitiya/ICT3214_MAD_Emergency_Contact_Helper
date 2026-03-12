@@ -345,7 +345,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="51dp"
+        android:layout_height="wrap_content"
         android:background="#FFDE85"
         app:itemActiveIndicatorStyle="@android:style/Widget.DeviceDefault.Button.Borderless"
         app:itemIconTint="#000000"
