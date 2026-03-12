@@ -210,4 +210,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert("emergency_contacts", null, values);
         return result != -1;
     }
+
+    public boolean deleteContact(int contactId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete("emergency_contacts", "id = ?", new String[]{String.valueOf(contactId)});
+        return result > 0;
+    }
 }
