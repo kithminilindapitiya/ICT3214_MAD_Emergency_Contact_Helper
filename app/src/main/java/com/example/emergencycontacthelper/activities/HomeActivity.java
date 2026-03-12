@@ -49,6 +49,12 @@ public class HomeActivity extends AppCompatActivity {
         setupQuickActionCards();
         setupBottomNavigation();
 
+        // Profile icon එක click කළ විට ProfileActivity වෙත යාම
+        tvAvatar.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
+
         // Handle back press using the modern API
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
