@@ -1,6 +1,7 @@
 package com.example.emergencycontacthelper.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check if user already logged in
+        SharedPreferences sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE);
+        if (sharedPref.getInt("user_id", -1) != -1) {
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_login);
 
         db = new DatabaseHelper(this);
@@ -31,11 +41,13 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         tvRegister = findViewById(R.id.tvRegister);
 
+        // Go to Register page
         tvRegister.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             finish();
         });
 
+        // Login button click
         btnLogin.setOnClickListener(v -> loginUser());
     }
 
@@ -49,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        // Hash the password before checking
         String hashedPassword = PasswordUtils.hashPassword(password);
 
         boolean isValid = db.checkUser(email, hashedPassword);
@@ -57,13 +70,18 @@ public class LoginActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
 
-            Intent intent =
-                    new Intent(LoginActivity.this, HomeActivity.class);
+            // Save user session
+            SharedPreferences sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
 
-            intent.putExtra("email", email);
+            editor.putInt("user_id", db.getUserIdByEmail(email));
+            editor.putString("username", db.getUsernameByEmail(email));
 
+            editor.apply();
+
+            // Go to Home page
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
-
             finish();
 
         } else {

@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryColor">#D32F2F</color>
-    <color name="primaryDark">#B71C1C</color>
-    <color name="accentColor">#FFCDD2</color>
-    <color name="textDark">#212121</color>
-    <color name="textLight">#757575</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="colorBackground">#F0F4FF</color>
-    <color name="colorCard">#FFFFFF</color>
-    <color name="colorTextPrimary">#3D4A7A</color>
-    <color name="colorTextSoft">#AAB4D4</color>
-    <color name="colorAccent">#6478C8</color>
-    <color name="colorEmergency">#FF7B7B</color>
+    <!-- Main Theme Colors -->
+    <color name="primaryColor">#E6C879</color>   <!-- Gold header -->
+    <color name="primaryDark">#D4B25F</color>
+    <color name="backgroundColor">#F5F5F5</color>
+
+    <!-- Buttons -->
+    <color name="callButton">#FF4B4B</color>  <!-- Red call button -->
+
+    <!-- Cards -->
+    <color name="cardBackground">#FFFFFF</color>
+
+    <!-- Essential Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Text -->
+    <color name="textLight">#888888</color>
 </resources>
