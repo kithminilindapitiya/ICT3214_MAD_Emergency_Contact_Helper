@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MDP">
-
+        <activity
+            android:name=".activities.SOS_Contact_update"
+            android:exported="false" />
         <activity
             android:name=".activities.HomeActivity"
             android:exported="false" />
@@ -21,25 +23,22 @@
         <activity
             android:name=".activities.LoginActivity"
             android:exported="false" />
-
         <activity
             android:name=".Confirmation_Dialog"
             android:exported="false"
             android:theme="@style/Theme.TransparentDialog" />
-
         <activity
             android:name=".Trigger_page"
             android:exported="false" />
-
         <activity
             android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
