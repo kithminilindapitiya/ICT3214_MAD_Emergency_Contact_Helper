@@ -1,7 +1,3 @@
 <resources>
-Authentication-Pages
     <string name="app_name">EmergencyContactHelper</string>
-
-    <string name="app_name">MDP</string>
-main
 </resources>

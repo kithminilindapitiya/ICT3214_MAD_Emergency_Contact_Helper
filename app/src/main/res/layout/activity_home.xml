@@ -199,142 +199,133 @@
                 android:rowCount="2"
                 android:useDefaultMargins="false">
 
-                <GridLayout
-                    android:layout_width="match_parent"
+                <!-- Ambulance -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardAmbulance"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:columnCount="2"
-                    android:rowCount="2"
-                    android:useDefaultMargins="false">
-
-                    <!-- Ambulance -->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardAmbulance"
-                        android:layout_width="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="5dp"
+                    app:cardBackgroundColor="#ffde85"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="4dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="5dp"
-                        app:cardBackgroundColor="#ffde85"
-                        app:cardCornerRadius="14dp"
-                        app:cardElevation="4dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/ic_ambulance"
+                            android:scaleType="fitCenter"/>
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:padding="16dp">
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/ic_ambulance"
-                                android:scaleType="fitCenter"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="Ambulance"
-                                android:textColor="#0f090f"
-                                android:textSize="13sp"
-                                android:textStyle="bold"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                            android:layout_marginTop="10dp"
+                            android:text="Ambulance"
+                            android:textColor="#0f090f"
+                            android:textSize="13sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <!-- First Aid -->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardFirstAid"
-                        android:layout_width="0dp"
+                <!-- First Aid -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardFirstAid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="5dp"
+                    app:cardBackgroundColor="#ffde85"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="4dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="5dp"
-                        app:cardBackgroundColor="#ffde85"
-                        app:cardCornerRadius="14dp"
-                        app:cardElevation="4dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/ic_firstaid"
+                            android:scaleType="fitCenter"/>
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:padding="16dp">
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/ic_firstaid"
-                                android:scaleType="fitCenter"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="First Aid"
-                                android:textColor="#0f090f"
-                                android:textSize="13sp"
-                                android:textStyle="bold"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                            android:layout_marginTop="10dp"
+                            android:text="First Aid"
+                            android:textColor="#0f090f"
+                            android:textSize="13sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <!-- Hospital -->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardHospital"
-                        android:layout_width="0dp"
+                <!-- Hospital -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardHospital"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="5dp"
+                    app:cardBackgroundColor="#ffde85"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="4dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="5dp"
-                        app:cardBackgroundColor="#ffde85"
-                        app:cardCornerRadius="14dp"
-                        app:cardElevation="4dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/ic_hospital"
+                            android:scaleType="fitCenter"/>
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:padding="16dp">
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/ic_hospital"
-                                android:scaleType="fitCenter"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="Hospital"
-                                android:textColor="#0f090f"
-                                android:textSize="13sp"
-                                android:textStyle="bold"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                            android:layout_marginTop="10dp"
+                            android:text="Hospital"
+                            android:textColor="#0f090f"
+                            android:textSize="13sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <!-- Check Up -->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardCheckUp"
-                        android:layout_width="0dp"
+                <!-- Check Up -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCheckUp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="5dp"
+                    app:cardBackgroundColor="#ffde85"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="4dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="5dp"
-                        app:cardBackgroundColor="#ffde85"
-                        app:cardCornerRadius="14dp"
-                        app:cardElevation="4dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/ic_checkup"
+                            android:scaleType="fitCenter"/>
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:padding="16dp">
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/ic_checkup"
-                                android:scaleType="fitCenter"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="Check Up"
-                                android:textColor="#0f090f"
-                                android:textSize="13sp"
-                                android:textStyle="bold"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-
+                            android:layout_marginTop="10dp"
+                            android:text="Check Up"
+                            android:textColor="#0f090f"
+                            android:textSize="13sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
             </GridLayout>
 
