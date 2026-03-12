@@ -70,6 +70,10 @@
             android:name=".activities.CheckupDetailActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".activities.UpdateNumberActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

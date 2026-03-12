@@ -24,8 +24,10 @@ public class AmbulanceDetailActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnUpdate).setOnClickListener(v -> {
-            // Placeholder for update logic
-            startActivity(new Intent(this, AddContactActivity.class));
+            Intent intent = new Intent(this, UpdateNumberActivity.class);
+            intent.putExtra("service_type", "Ambulance");
+            intent.putExtra("current_number", ambulancePhone);
+            startActivity(intent);
         });
     }
 }

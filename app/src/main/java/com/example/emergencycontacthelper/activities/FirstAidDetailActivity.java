@@ -24,7 +24,10 @@ public class FirstAidDetailActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnUpdate).setOnClickListener(v -> {
-            startActivity(new Intent(this, AddContactActivity.class));
+            Intent intent = new Intent(this, UpdateNumberActivity.class);
+            intent.putExtra("service_type", "First Aid");
+            intent.putExtra("current_number", firstAidPhone);
+            startActivity(intent);
         });
     }
 }

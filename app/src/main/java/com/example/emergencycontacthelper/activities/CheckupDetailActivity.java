@@ -24,7 +24,10 @@ public class CheckupDetailActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnUpdate).setOnClickListener(v -> {
-            startActivity(new Intent(this, AddContactActivity.class));
+            Intent intent = new Intent(this, UpdateNumberActivity.class);
+            intent.putExtra("service_type", "Checkup");
+            intent.putExtra("current_number", checkupPhone);
+            startActivity(intent);
         });
     }
 }

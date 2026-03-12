@@ -24,7 +24,10 @@ public class HospitalDetailActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnUpdateHospital).setOnClickListener(v -> {
-            startActivity(new Intent(this, AddContactActivity.class));
+            Intent intent = new Intent(this, UpdateNumberActivity.class);
+            intent.putExtra("service_type", "Hospital");
+            intent.putExtra("current_number", hospitalPhone);
+            startActivity(intent);
         });
     }
 }
