@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MDP">
         <activity
+            android:name=".activities.Edit_profile"
+            android:exported="false" />
+        <activity
             android:name=".activities.SOS_Contact_update"
             android:exported="false" />
         <activity
