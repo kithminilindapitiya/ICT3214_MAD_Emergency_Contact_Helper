@@ -1,12 +1,10 @@
 package com.example.emergencycontacthelper.activities;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
@@ -145,21 +143,29 @@ public class HomeActivity extends AppCompatActivity {
     // 6. QUICK ACTION CARDS
     // ─────────────────────────────────────────────
     private void setupQuickActionCards() {
+        // Ambulance බොත්තම
         findViewById(R.id.cardAmbulance).setOnClickListener(v -> {
-            startActivity(new Intent(this, AmbulanceDetailActivity.class));
+            Intent intent = new Intent(HomeActivity.this, AmbulanceDetailActivity.class);
+            startActivity(intent);
         });
 
-        findViewById(R.id.cardFirstAid).setOnClickListener(v ->
-                startActivity(new Intent(this, FirstAidDetailActivity.class))
-        );
+        // First Aid බොත්තම
+        findViewById(R.id.cardFirstAid).setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, FirstAidDetailActivity.class);
+            startActivity(intent);
+        });
 
-        findViewById(R.id.cardHospital).setOnClickListener(v ->
-                startActivity(new Intent(this, HospitalDetailActivity.class))
-        );
+        // Hospital බොත්තම
+        findViewById(R.id.cardHospital).setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, HospitalDetailActivity.class);
+            startActivity(intent);
+        });
 
-        findViewById(R.id.cardCheckUp).setOnClickListener(v ->
-                startActivity(new Intent(this, CheckupDetailActivity.class))
-        );
+        // Police බොත්තම (පැරණි cardCheckUp ID එක භාවිත වේ)
+        findViewById(R.id.cardPolice).setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, CheckupDetailActivity.class);
+            startActivity(intent);
+        });
     }
 
     // ─────────────────────────────────────────────

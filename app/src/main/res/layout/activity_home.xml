@@ -303,9 +303,9 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Check Up -->
+                <!-- Police (changed from Check Up) -->
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardCheckUp"
+                    android:id="@+id/cardPolice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -322,14 +322,14 @@
                         <ImageView
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@drawable/ic_checkup"
+                            android:src="@drawable/ic_police"
                             android:scaleType="fitCenter"
                             tools:ignore="ContentDescription" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="Check Up"
+                            android:text="Police"
                             android:textColor="#0f090f"
                             android:textSize="13sp"
                             android:textStyle="bold"/>
