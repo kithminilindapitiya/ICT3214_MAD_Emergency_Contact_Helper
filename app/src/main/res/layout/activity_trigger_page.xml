@@ -15,17 +15,18 @@
         android:paddingBottom="24dp">
 
         <!-- Top Header -->
-        <ImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@android:drawable/ic_menu_revert"
+            android:text="Back"
+            android:textColor="#424242"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="#424242" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvHeaderTitle"
@@ -39,18 +40,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/btnBack" />
-
-        <ImageButton
-            android:id="@+id/btnSettings"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@android:drawable/ic_menu_preferences"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="#424242" />
 
         <!-- Quick Help Title -->
         <TextView
@@ -173,28 +162,17 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/ivContactPhoto"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:padding="2dp"
-                        android:src="@android:drawable/ic_menu_report_image"
-                        app:shapeAppearanceOverlay="@style/CircleImage"
-                        app:strokeColor="#FBC02D"
-                        app:strokeWidth="2dp" />
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvContactName"
+                            android:id="@+id/tvContactPhone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="AMMA (MOM)"
+                            android:text="+94 XX XXX XXXX"
                             android:textColor="#212121"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -219,62 +197,21 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnChangeContact"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="CHANGE"
                         android:textColor="#FBC02D"
-                        app:icon="@android:drawable/ic_menu_edit"
-                        app:iconTint="#FBC02D" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnDeleteContact"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="DELETE"
-                        android:textColor="#D32F2F"
-                        app:icon="@android:drawable/ic_menu_delete"
-                        app:iconTint="#D32F2F" />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <!-- Alternative Quick Actions Label -->
-        <TextView
-            android:id="@+id/tvQuickActionsLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="QUICK SETTINGS"
-            android:textColor="#757575"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activeContactCard" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnUpdateContact"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="24dp"
-            android:text="UPDATE CONTACT INFO"
-            android:textColor="#424242"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvQuickActionsLabel"
-            app:strokeColor="#FBC02D" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

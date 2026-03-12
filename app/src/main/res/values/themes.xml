@@ -1,9 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+    <style name="Base.Theme.MDP" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+    </style>
+
+    <style name="Theme.MDP" parent="Base.Theme.MDP" />
+
     <style name="Base.Theme.EmergencyContactHelper" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
     </style>
 
     <style name="Theme.EmergencyContactHelper" parent="Base.Theme.EmergencyContactHelper" />
+
+    <!-- Transparent Dialog Theme -->
+    <style name="Theme.TransparentDialog" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 </resources>

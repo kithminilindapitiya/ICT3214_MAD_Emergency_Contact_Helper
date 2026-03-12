@@ -1,7 +1,8 @@
 package com.example.emergencycontacthelper.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,17 +11,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.emergencycontacthelper.R;
-import com.google.android.material.button.MaterialButton;
 
-public class Trigger_page extends AppCompatActivity {
-
-    private MaterialButton btnBack;
+public class Splash_screen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_trigger_page);
+        setContentView(R.layout.activity_splash_screen);
         
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -28,15 +26,14 @@ public class Trigger_page extends AppCompatActivity {
             return insets;
         });
 
-        // Initialize Back Button
-        btnBack = findViewById(R.id.btnBack);
-
-        // Set Click Listener to go back
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        // Splash screen එක තත්පර 3ක් පෙන්වා LoginActivity එකට යාම
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onClick(View v) {
-                onBackPressed(); // This will take the user to the previous activity
+            public void run() {
+                Intent intent = new Intent(Splash_screen.this, LoginActivity.class);
+                startActivity(intent);
+                finish(); // Splash screen එක stack එකෙන් ඉවත් කිරීම
             }
-        });
+        }, 3000); // 3000ms = තත්පර 3
     }
 }
