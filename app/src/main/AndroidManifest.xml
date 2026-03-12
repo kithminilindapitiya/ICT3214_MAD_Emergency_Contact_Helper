@@ -14,13 +14,17 @@
         android:theme="@style/Theme.EmergencyContactHelper">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.Splash_screen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
 
         <activity
             android:name=".activities.LoginActivity"
@@ -49,6 +53,15 @@
         <activity
             android:name=".activities.EmergencyTriggerActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".activities.UpdateNumberActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.Confirmation_Dialog"
+            android:exported="false"
+            android:theme="@style/Theme.TransparentDialog" />
 
     </application>
 

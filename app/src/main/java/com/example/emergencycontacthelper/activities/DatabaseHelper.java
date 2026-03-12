@@ -211,4 +211,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return contactList;
     }
+
+    // ─────────────────────────────────────
+    // Update Contact Phone Number
+    // ─────────────────────────────────────
+    public boolean updateContactPhone(int contactId, String newPhone) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("phone", newPhone);
+        
+        int result = db.update("emergency_contacts", values, "id = ?", new String[]{String.valueOf(contactId)});
+        return result > 0;
+    }
+
+    // ─────────────────────────────────────
+    // Add Emergency Contact
+    // ─────────────────────────────────────
+    public boolean addEmergencyContact(int userId, String name, String phone, String relation, int isPrimary) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("user_id", userId);
+        values.put("name", name);
+        values.put("phone", phone);
+        values.put("relation", relation);
+        values.put("is_primary", isPrimary);
+
+        long result = db.insert("emergency_contacts", null, values);
+        return result != -1;
+    }
 }

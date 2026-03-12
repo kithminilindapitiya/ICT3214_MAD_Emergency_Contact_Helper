@@ -1,6 +1,7 @@
 package com.example.emergencycontacthelper.activities;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,18 +10,33 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.emergencycontacthelper.R;
+import com.google.android.material.button.MaterialButton;
 
 public class Trigger_page extends AppCompatActivity {
+
+    private MaterialButton btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_trigger_page);
+        
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        // Initialize Back Button
+        btnBack = findViewById(R.id.btnBack);
+
+        // Set Click Listener to go back
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed(); // This will take the user to the previous activity
+            }
         });
     }
 }

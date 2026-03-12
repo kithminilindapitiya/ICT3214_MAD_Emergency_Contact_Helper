@@ -110,25 +110,9 @@ public class HomeActivity extends AppCompatActivity {
     // ─────────────────────────────────────────────
     private void setupEmergencyButton() {
         findViewById(R.id.cardEmergency).setOnClickListener(v -> {
-            EmergencyContact primaryContact = dbHelper.getPrimaryContact(loggedUserId);
-
-            if (primaryContact == null) {
-                Toast.makeText(this,
-                        "No contacts saved yet. Please add a contact first.",
-                        Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            new AlertDialog.Builder(this)
-                    .setTitle("🆘 Emergency Call")
-                    .setMessage("Call " + primaryContact.getName() + " at " + primaryContact.getPhone() + "?")
-                    .setPositiveButton("Call Now", (dialog, which) -> {
-                        Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse("tel:" + primaryContact.getPhone()));
-                        startActivity(callIntent);
-                    })
-                    .setNegativeButton("Cancel", null)
-                    .show();
+            // "Emergency Call" බොත්තම එබූ විට EmergencyTriggerActivity (Trigger_page) වෙත යාම
+            Intent intent = new Intent(HomeActivity.this, EmergencyTriggerActivity.class);
+            startActivity(intent);
         });
     }
 
