@@ -12,85 +12,70 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EmergencyContactHelper">
-
+        <activity
+            android:name=".activities.contact_menu"
+            android:exported="false" />
         <activity
             android:name=".activities.Splash_screen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.LoginActivity"
             android:exported="false" />
-        
         <activity
             android:name=".activities.RegisterActivity"
             android:exported="false" />
-        
         <activity
             android:name=".activities.HomeActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.ViewContactsActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.AddContactActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.ProfileActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.Edit_profile"
             android:exported="false" />
-
         <activity
             android:name=".activities.EmergencyTriggerActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.UpdateNumberActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.Confirmation_Dialog"
             android:exported="false"
             android:theme="@style/Theme.TransparentDialog" />
-
         <activity
             android:name=".activities.AmbulanceDetailActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.FirstAidDetailActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.HospitalDetailActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.CheckupDetailActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.Trigger_page"
             android:exported="false" />
-
         <activity
             android:name=".activities.SOS_Contact_update"
             android:exported="false" />
-
     </application>
 
 </manifest>

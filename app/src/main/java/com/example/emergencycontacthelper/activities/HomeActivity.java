@@ -49,12 +49,6 @@ public class HomeActivity extends AppCompatActivity {
         setupQuickActionCards();
         setupBottomNavigation();
 
-        // Profile icon එක click කළ විට ProfileActivity වෙත යාම
-        tvAvatar.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
-            startActivity(intent);
-        });
-
         // Handle back press using the modern API
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
@@ -114,7 +108,6 @@ public class HomeActivity extends AppCompatActivity {
     // ─────────────────────────────────────────────
     private void setupEmergencyButton() {
         findViewById(R.id.cardEmergency).setOnClickListener(v -> {
-            // "Emergency Call" බොත්තම එබූ විට EmergencyTriggerActivity (Trigger_page) වෙත යාම
             Intent intent = new Intent(HomeActivity.this, EmergencyTriggerActivity.class);
             startActivity(intent);
         });
@@ -141,7 +134,7 @@ public class HomeActivity extends AppCompatActivity {
         rvContacts.setNestedScrollingEnabled(false);
 
         tvSeeAll.setOnClickListener(v ->
-                startActivity(new Intent(this, ViewContactsActivity.class))
+                startActivity(new Intent(HomeActivity.this, contact_menu.class))
         );
     }
 
@@ -186,13 +179,14 @@ public class HomeActivity extends AppCompatActivity {
             if (id == R.id.nav_home) {
                 return true;
             } else if (id == R.id.nav_contacts) {
-                startActivity(new Intent(this, ViewContactsActivity.class));
+                Intent intent = new Intent(HomeActivity.this, contact_menu.class);
+                startActivity(intent);
                 return true;
             } else if (id == R.id.nav_sos) {
-                startActivity(new Intent(this, EmergencyTriggerActivity.class));
+                startActivity(new Intent(HomeActivity.this, EmergencyTriggerActivity.class));
                 return true;
             } else if (id == R.id.nav_profile) {
-                startActivity(new Intent(this, ProfileActivity.class));
+                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
                 return true;
             }
             return false;
@@ -202,6 +196,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        bottomNav.setSelectedItemId(R.id.nav_home); // Ensure home is selected when returning
         setupContactsList();
     }
 }

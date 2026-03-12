@@ -17,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
     private Button btnLogin;
-    private TextView tvRegister;
+    private TextView tvGoToRegister;
     private DatabaseHelper db;
 
     @Override
@@ -39,10 +39,10 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        tvRegister = findViewById(R.id.tvRegister);
+        tvGoToRegister = findViewById(R.id.tvGoToRegister);
 
         // Go to Register page
-        tvRegister.setOnClickListener(v -> {
+        tvGoToRegister.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             finish();
         });
