@@ -10,7 +10,7 @@ import com.example.emergencycontacthelper.R;
 
 public class CheckupDetailActivity extends AppCompatActivity {
 
-    private String policePhone = "119"; // Default
+    private String checkupPhone = "+1 800 222 333"; // Default
     private DatabaseHelper dbHelper;
     private int loggedUserId;
     private TextView tvPhoneNumber;
@@ -18,8 +18,8 @@ public class CheckupDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Using activity_police_detail layout as requested for Police information
-        setContentView(R.layout.activity_police_detail);
+        // Corrected to use activity_checkup_detail layout
+        setContentView(R.layout.activity_checkup_detail);
 
         dbHelper = new DatabaseHelper(this);
         loadUserSession();
@@ -32,14 +32,14 @@ public class CheckupDetailActivity extends AppCompatActivity {
 
         findViewById(R.id.btnCall).setOnClickListener(v -> {
             Intent callIntent = new Intent(Intent.ACTION_DIAL);
-            callIntent.setData(Uri.parse("tel:" + policePhone));
+            callIntent.setData(Uri.parse("tel:" + checkupPhone));
             startActivity(callIntent);
         });
 
         findViewById(R.id.btnUpdate).setOnClickListener(v -> {
             Intent intent = new Intent(this, UpdateNumberActivity.class);
-            intent.putExtra("service_type", "Police");
-            intent.putExtra("current_number", policePhone);
+            intent.putExtra("service_type", "Checkup");
+            intent.putExtra("current_number", checkupPhone);
             startActivity(intent);
         });
     }
@@ -50,10 +50,10 @@ public class CheckupDetailActivity extends AppCompatActivity {
     }
 
     private void loadSavedNumber() {
-        // Load saved police number or use default "119"
-        policePhone = dbHelper.getServicePhone(loggedUserId, "Police", "119");
+        // Load saved checkup number
+        checkupPhone = dbHelper.getServicePhone(loggedUserId, "Checkup", "+1 800 222 333");
         if (tvPhoneNumber != null) {
-            tvPhoneNumber.setText(policePhone);
+            tvPhoneNumber.setText(checkupPhone);
         }
     }
 
