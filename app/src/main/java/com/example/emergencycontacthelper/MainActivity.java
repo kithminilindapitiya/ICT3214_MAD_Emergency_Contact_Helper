@@ -7,7 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.emergencycontacthelper.activities.LoginActivity;
-import com.example.emergencycontacthelper.database.DatabaseHelper;
+import com.example.emergencycontacthelper.activities.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
 

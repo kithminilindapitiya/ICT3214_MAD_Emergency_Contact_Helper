@@ -1,0 +1,116 @@
+package com.example.emergencycontacthelper.activities;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.database.Cursor;
+import com.example.emergencycontacthelper.EmergencyContact;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DatabaseHelper extends SQLiteOpenHelper {
+
+    private static final String DATABASE_NAME = "EmergencyContactHelper.db";
+    private static final int DATABASE_VERSION = 2; // Incremented version
+
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String CREATE_USERS_TABLE = "CREATE TABLE users (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "name TEXT, " +
+                "email TEXT UNIQUE, " +
+                "password TEXT)";
+
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE emergency_contacts (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "user_id INTEGER, " +
+                "name TEXT, " +
+                "phone TEXT, " +
+                "relation TEXT, " +
+                "is_primary INTEGER DEFAULT 0, " +
+                "FOREIGN KEY(user_id) REFERENCES users(id))";
+
+        db.execSQL(CREATE_USERS_TABLE);
+        db.execSQL(CREATE_CONTACTS_TABLE);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS users");
+        db.execSQL("DROP TABLE IF EXISTS emergency_contacts");
+        onCreate(db);
+    }
+
+    // Insert new user
+    public boolean addUser(String name, String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        values.put("email", email);
+        values.put("password", password);
+        long result = db.insert("users", null, values);
+        return result != -1;
+    }
+
+    // Check user login
+    public boolean checkUser(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM users WHERE email = ? AND password = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email, password});
+        boolean exists = cursor.moveToFirst();
+        cursor.close();
+        return exists;
+    }
+
+    // Get primary contact for a user
+    public EmergencyContact getPrimaryContact(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("emergency_contacts", null, "user_id = ? AND is_primary = 1",
+                new String[]{String.valueOf(userId)}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            EmergencyContact contact = new EmergencyContact(
+                    cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("phone"))
+            );
+            contact.setUserId(cursor.getInt(cursor.getColumnIndexOrThrow("user_id")));
+            contact.setRelation(cursor.getString(cursor.getColumnIndexOrThrow("relation")));
+            cursor.close();
+            return contact;
+        }
+        if (cursor != null) cursor.close();
+        
+        // If no primary, return the first one available
+        List<EmergencyContact> all = getContactsByUser(userId);
+        return all.isEmpty() ? null : all.get(0);
+    }
+
+    // Get all contacts for a user
+    public List<EmergencyContact> getContactsByUser(int userId) {
+        List<EmergencyContact> contactList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("emergency_contacts", null, "user_id = ?",
+                new String[]{String.valueOf(userId)}, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                EmergencyContact contact = new EmergencyContact(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("phone"))
+                );
+                contact.setUserId(cursor.getInt(cursor.getColumnIndexOrThrow("user_id")));
+                contact.setRelation(cursor.getString(cursor.getColumnIndexOrThrow("relation")));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+}

@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.emergencycontacthelper.R;
-import com.example.emergencycontacthelper.database.DatabaseHelper;
 import com.example.emergencycontacthelper.utils.PasswordUtils;
 
 public class LoginActivity extends AppCompatActivity {
