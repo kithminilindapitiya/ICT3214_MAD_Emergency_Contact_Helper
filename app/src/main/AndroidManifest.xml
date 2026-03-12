@@ -83,6 +83,14 @@
             android:name=".activities.CheckupDetailActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".activities.Trigger_page"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.SOS_Contact_update"
+            android:exported="false" />
+
     </application>
 
 </manifest>

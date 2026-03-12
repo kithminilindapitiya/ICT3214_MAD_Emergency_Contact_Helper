@@ -57,7 +57,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (oldVersion < 4) {
             db.execSQL("ALTER TABLE users ADD COLUMN phone TEXT");
         }
-        // Handle other versions if needed
     }
 
     public boolean addUser(String name, String email, String password) {
@@ -118,7 +117,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result > 0;
     }
 
-    // Existing methods for emergency contacts and service contacts...
     public EmergencyContact getPrimaryContact(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query("emergency_contacts", null, "user_id = ? AND is_primary = 1",
@@ -135,6 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return contact;
         }
         if (cursor != null) cursor.close();
+        
         List<EmergencyContact> contacts = getContactsByUser(userId);
         return contacts.isEmpty() ? null : contacts.get(0);
     }
@@ -158,6 +157,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return contactList;
+    }
+
+    public boolean updateContact(int contactId, String name, String phone) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        values.put("phone", phone);
+        int result = db.update("emergency_contacts", values, "id = ?", new String[]{String.valueOf(contactId)});
+        return result > 0;
     }
 
     public boolean updateContactPhone(int contactId, String newPhone) {

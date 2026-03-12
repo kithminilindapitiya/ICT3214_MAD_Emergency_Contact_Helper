@@ -168,7 +168,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         // Police බොත්තම (පැරණි cardCheckUp ID එක භාවිත වේ)
-        findViewById(R.id.cardPolice).setOnClickListener(v -> {
+        findViewById(R.id.cardAmbulance).setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, CheckupDetailActivity.class);
             startActivity(intent);
         });

@@ -51,7 +51,7 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- Avatar Circle -->
+        <!-- Avatar Circle (Hidden as per request) -->
         <TextView
             android:id="@+id/tvAvatar"
             android:layout_width="44dp"
@@ -60,6 +60,7 @@
             android:background="@drawable/bg_avatar"
             android:gravity="center"
             android:text="A"
+            android:visibility="gone"
             android:textColor="#0f090f"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -303,9 +304,9 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Police (changed from Check Up) -->
+                <!-- Check Up -->
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardPolice"
+                    android:id="@+id/cardCheckUp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -322,14 +323,14 @@
                         <ImageView
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@drawable/ic_police"
+                            android:src="@drawable/ic_checkup"
                             android:scaleType="fitCenter"
                             tools:ignore="ContentDescription" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="Police"
+                            android:text="Check Up"
                             android:textColor="#0f090f"
                             android:textSize="13sp"
                             android:textStyle="bold"/>
@@ -341,12 +342,11 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- ⑤ BOTTOM NAVIGATION (Fixed at bottom) -->
+    <!-- ⑤ BOTTOM NAVIGATION (Height increased as per request) -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="51dp"
-        android:layout_marginBottom="4dp"
+        android:layout_height="70dp"
         android:background="#FFDE85"
         app:itemActiveIndicatorStyle="@android:style/Widget.DeviceDefault.Button.Borderless"
         app:itemIconTint="#000000"
@@ -355,7 +355,6 @@
         app:itemTextColor="#000000"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_nav_menu"
-        tools:layout_editor_absoluteX="0dp" />
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
