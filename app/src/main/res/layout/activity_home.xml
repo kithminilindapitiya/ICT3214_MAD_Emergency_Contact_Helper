@@ -51,7 +51,7 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- Avatar Circle -->
+        <!-- Avatar Circle (Hidden as per request) -->
         <TextView
             android:id="@+id/tvAvatar"
             android:layout_width="44dp"
@@ -60,6 +60,7 @@
             android:background="@drawable/bg_avatar"
             android:gravity="center"
             android:text="A"
+            android:visibility="gone"
             android:textColor="#0f090f"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -341,11 +342,11 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- ⑤ BOTTOM NAVIGATION (Fixed at bottom) -->
+    <!-- ⑤ BOTTOM NAVIGATION (Height increased as per request) -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="51dp"
+        android:layout_height="70dp"
         android:background="#FFDE85"
         app:itemActiveIndicatorStyle="@android:style/Widget.DeviceDefault.Button.Borderless"
         app:itemIconTint="#000000"

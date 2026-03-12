@@ -70,7 +70,7 @@ public class EmergencyTriggerActivity extends AppCompatActivity {
     private void setupListeners() {
         // Back Button
         if (btnBack != null) {
-            btnBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+            btnBack.setOnClickListener(v -> finish());
         }
 
         // SOS Button -> Go to Confirmation Dialog
@@ -88,10 +88,10 @@ public class EmergencyTriggerActivity extends AppCompatActivity {
             });
         }
 
-        // Change Contact Button -> Go to UpdateNumberActivity
+        // Change Contact Button -> Go to SOS_Contact_update
         if (btnChangeContact != null) {
             btnChangeContact.setOnClickListener(v -> {
-                Intent intent = new Intent(EmergencyTriggerActivity.this, UpdateNumberActivity.class);
+                Intent intent = new Intent(EmergencyTriggerActivity.this, SOS_Contact_update.class);
                 startActivity(intent);
             });
         }
