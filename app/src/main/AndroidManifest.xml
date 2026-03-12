@@ -51,6 +51,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".activities.Edit_profile"
+            android:exported="false" />
+
+        <activity
             android:name=".activities.EmergencyTriggerActivity"
             android:exported="false" />
 

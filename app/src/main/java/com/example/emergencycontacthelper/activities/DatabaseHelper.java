@@ -14,7 +14,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "EmergencyContactHelper.db";
-    private static final int DATABASE_VERSION = 3; // Incremented version for new table
+    private static final int DATABASE_VERSION = 4; // Incremented for user phone column
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,6 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT, " +
                 "email TEXT UNIQUE, " +
+                "phone TEXT, " +
                 "password TEXT)";
 
         String CREATE_CONTACTS_TABLE = "CREATE TABLE emergency_contacts (" +
@@ -38,7 +39,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "is_primary INTEGER DEFAULT 0, " +
                 "FOREIGN KEY(user_id) REFERENCES users(id))";
 
-        // New table for service contacts (Ambulance, Police, etc.)
         String CREATE_SERVICE_CONTACTS_TABLE = "CREATE TABLE service_contacts (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "user_id INTEGER, " +
@@ -54,26 +54,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 3) {
-            String CREATE_SERVICE_CONTACTS_TABLE = "CREATE TABLE service_contacts (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "user_id INTEGER, " +
-                    "service_name TEXT, " +
-                    "phone TEXT, " +
-                    "UNIQUE(user_id, service_name), " +
-                    "FOREIGN KEY(user_id) REFERENCES users(id))";
-            db.execSQL(CREATE_SERVICE_CONTACTS_TABLE);
-        } else {
-            db.execSQL("DROP TABLE IF EXISTS users");
-            db.execSQL("DROP TABLE IF EXISTS emergency_contacts");
-            db.execSQL("DROP TABLE IF EXISTS service_contacts");
-            onCreate(db);
+        if (oldVersion < 4) {
+            db.execSQL("ALTER TABLE users ADD COLUMN phone TEXT");
         }
+        // Handle other versions if needed
     }
 
-    // ─────────────────────────────────────
-    // Add New User
-    // ─────────────────────────────────────
     public boolean addUser(String name, String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -84,9 +70,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    // ─────────────────────────────────────
-    // Check User Login
-    // ─────────────────────────────────────
     public boolean checkUser(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM users WHERE email = ? AND password = ?";
@@ -96,9 +79,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exists;
     }
 
-    // ─────────────────────────────────────
-    // Get User ID by Email
-    // ─────────────────────────────────────
     public int getUserIdByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT id FROM users WHERE email=?", new String[]{email});
@@ -111,9 +91,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return -1;
     }
 
-    // ─────────────────────────────────────
-    // Get Username by Email
-    // ─────────────────────────────────────
     public String getUsernameByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT name FROM users WHERE email=?", new String[]{email});
@@ -126,9 +103,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return "User";
     }
 
-    // ─────────────────────────────────────
-    // Get Primary Emergency Contact
-    // ─────────────────────────────────────
+    public Cursor getUserData(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM users WHERE id=?", new String[]{String.valueOf(userId)});
+    }
+
+    public boolean updateUserProfile(int id, String name, String email, String phone) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        values.put("email", email);
+        values.put("phone", phone);
+        int result = db.update("users", values, "id = ?", new String[]{String.valueOf(id)});
+        return result > 0;
+    }
+
+    // Existing methods for emergency contacts and service contacts...
     public EmergencyContact getPrimaryContact(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query("emergency_contacts", null, "user_id = ? AND is_primary = 1",
@@ -149,9 +139,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return contacts.isEmpty() ? null : contacts.get(0);
     }
 
-    // ─────────────────────────────────────
-    // Get All Contacts by User
-    // ─────────────────────────────────────
     public List<EmergencyContact> getContactsByUser(int userId) {
         List<EmergencyContact> contactList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -173,9 +160,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return contactList;
     }
 
-    // ─────────────────────────────────────
-    // Update Contact Phone Number
-    // ─────────────────────────────────────
     public boolean updateContactPhone(int contactId, String newPhone) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -184,15 +168,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result > 0;
     }
 
-    // ─────────────────────────────────────
-    // Service Contacts Methods
-    // ─────────────────────────────────────
-    
     public String getServicePhone(int userId, String serviceName, String defaultPhone) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query("service_contacts", new String[]{"phone"}, "user_id = ? AND service_name = ?",
                 new String[]{String.valueOf(userId), serviceName}, null, null, null);
-        
         if (cursor != null && cursor.moveToFirst()) {
             String phone = cursor.getString(0);
             cursor.close();
@@ -208,14 +187,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("user_id", userId);
         values.put("service_name", serviceName);
         values.put("phone", newPhone);
-        
         long result = db.replace("service_contacts", null, values);
         return result != -1;
     }
 
-    // ─────────────────────────────────────
-    // Add Emergency Contact
-    // ─────────────────────────────────────
     public boolean addEmergencyContact(int userId, String name, String phone, String relation, int isPrimary) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
