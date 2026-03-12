@@ -63,6 +63,22 @@
             android:exported="false"
             android:theme="@style/Theme.TransparentDialog" />
 
+        <activity
+            android:name=".activities.AmbulanceDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.FirstAidDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.HospitalDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.CheckupDetailActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

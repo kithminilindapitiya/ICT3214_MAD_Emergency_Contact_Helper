@@ -6,7 +6,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.emergencycontacthelper.EmergencyContact;
 import com.example.emergencycontacthelper.R;
 
 public class UpdateNumberActivity extends AppCompatActivity {
@@ -30,8 +29,15 @@ public class UpdateNumberActivity extends AppCompatActivity {
         etNewNumber = findViewById(R.id.etNewNumber);
 
         serviceType = getIntent().getStringExtra("service_type");
+        String defaultPhone = getIntent().getStringExtra("current_number");
         
-        loadCurrentContact();
+        // Load the saved number from the new database table
+        String currentSavedNumber = dbHelper.getServicePhone(loggedUserId, serviceType, defaultPhone);
+        tvCurrentNumber.setText(currentSavedNumber);
+
+        if (serviceType != null) {
+            tvUpdateTitle.setText("Update " + serviceType + " Number");
+        }
 
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
@@ -40,7 +46,7 @@ public class UpdateNumberActivity extends AppCompatActivity {
             if (newNumber.isEmpty()) {
                 Toast.makeText(this, "Please enter a new number", Toast.LENGTH_SHORT).show();
             } else {
-                saveNewNumber(newNumber);
+                updateServiceNumber(newNumber);
             }
         });
     }
@@ -50,37 +56,13 @@ public class UpdateNumberActivity extends AppCompatActivity {
         loggedUserId = sharedPref.getInt("user_id", -1);
     }
 
-    private void loadCurrentContact() {
-        EmergencyContact primaryContact = dbHelper.getPrimaryContact(loggedUserId);
-        if (primaryContact != null) {
-            tvCurrentNumber.setText(primaryContact.getPhone());
+    private void updateServiceNumber(String newNumber) {
+        boolean success = dbHelper.updateServicePhone(loggedUserId, serviceType, newNumber);
+        if (success) {
+            Toast.makeText(this, serviceType + " number updated successfully!", Toast.LENGTH_SHORT).show();
+            finish();
         } else {
-            tvCurrentNumber.setText("No primary contact");
-        }
-    }
-
-    private void saveNewNumber(String newNumber) {
-        // Here we update the primary contact's number in the database
-        EmergencyContact primaryContact = dbHelper.getPrimaryContact(loggedUserId);
-        
-        if (primaryContact != null) {
-            // If exists, update
-            boolean success = dbHelper.updateContactPhone(primaryContact.getId(), newNumber);
-            if (success) {
-                Toast.makeText(this, "Number updated successfully!", Toast.LENGTH_SHORT).show();
-                finish();
-            } else {
-                Toast.makeText(this, "Update failed", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            // If no primary contact exists, create a default one
-            boolean success = dbHelper.addEmergencyContact(loggedUserId, "Primary Contact", newNumber, "Emergency", 1);
-            if (success) {
-                Toast.makeText(this, "Primary contact added!", Toast.LENGTH_SHORT).show();
-                finish();
-            } else {
-                Toast.makeText(this, "Failed to add contact", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(this, "Failed to update number", Toast.LENGTH_SHORT).show();
         }
     }
 }
