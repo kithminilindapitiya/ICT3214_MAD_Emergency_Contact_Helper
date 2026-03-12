@@ -11,7 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.emergencycontacthelper.activities.LoginActivity;
-import com.example.emergencycontacthelper.database.DatabaseHelper;
+import com.example.emergencycontacthelper.activities.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
 

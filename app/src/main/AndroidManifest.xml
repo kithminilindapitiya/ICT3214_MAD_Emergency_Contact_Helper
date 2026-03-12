@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-Authentication-Pages
-    xmlns:tools="http://schemas.android.com/tools" >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    xmlns:tools="http://schemas.android.com/tools">
-  main
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -14,38 +11,45 @@ Authentication-Pages
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-Authentication-Pages
-        android:theme="@style/Theme.EmergencyContactHelper" >
-        <activity
-            android:name=".activities.HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.LoginActivity"
-            android:exported="false" />
+        android:theme="@style/Theme.EmergencyContactHelper">
+
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
-
-        android:theme="@style/Theme.MDP">
-        <activity
-            android:name=".Confirmation_Dialog"
-            android:exported="false" />
-        <activity
-            android:name=".Trigger_page"
-            android:exported="false" />
-        <activity
-            android:name=".HomeActivity"
             android:exported="true">
-main
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
+        
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false" />
+        
+        <activity
+            android:name=".activities.HomeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.ViewContactsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.AddContactActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.EmergencyTriggerActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
