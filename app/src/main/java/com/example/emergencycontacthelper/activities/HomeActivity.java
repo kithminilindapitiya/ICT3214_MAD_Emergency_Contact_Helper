@@ -162,21 +162,19 @@ public class HomeActivity extends AppCompatActivity {
     // ─────────────────────────────────────────────
     private void setupQuickActionCards() {
         findViewById(R.id.cardAmbulance).setOnClickListener(v -> {
-            Intent callIntent = new Intent(Intent.ACTION_DIAL);
-            callIntent.setData(Uri.parse("tel:119")); // Ambulance number
-            startActivity(callIntent);
+            startActivity(new Intent(this, AmbulanceDetailActivity.class));
         });
 
         findViewById(R.id.cardFirstAid).setOnClickListener(v ->
-                startActivity(new Intent(this, AddContactActivity.class))
+                startActivity(new Intent(this, FirstAidDetailActivity.class))
         );
 
         findViewById(R.id.cardHospital).setOnClickListener(v ->
-                startActivity(new Intent(this, ViewContactsActivity.class))
+                startActivity(new Intent(this, HospitalDetailActivity.class))
         );
 
         findViewById(R.id.cardCheckUp).setOnClickListener(v ->
-                startActivity(new Intent(this, ProfileActivity.class))
+                startActivity(new Intent(this, CheckupDetailActivity.class))
         );
     }
 
