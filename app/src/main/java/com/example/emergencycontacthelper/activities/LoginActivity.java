@@ -1,6 +1,7 @@
 package com.example.emergencycontacthelper.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,12 +23,19 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check if user already logged in
+        SharedPreferences sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE);
+        if (sharedPref.getInt("user_id", -1) != -1) {
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_login);
 
-        // Initialize database
         db = new DatabaseHelper(this);
 
-        // Link UI elements
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
@@ -35,47 +43,52 @@ public class LoginActivity extends AppCompatActivity {
 
         // Go to Register page
         tvRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            finish();
         });
 
         // Login button click
-        btnLogin.setOnClickListener(v -> {
+        btnLogin.setOnClickListener(v -> loginUser());
+    }
 
-            String email = etEmail.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
+    private void loginUser() {
 
-            // Basic validation
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(LoginActivity.this,
-                        "Please fill all fields",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
 
-            // Hash entered password
-            String hashedPassword = PasswordUtils.hashPassword(password);
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            // Check user in database
-            boolean isValid = db.checkUser(email, hashedPassword);
+        // Hash the password before checking
+        String hashedPassword = PasswordUtils.hashPassword(password);
 
-            if (isValid) {
-                Toast.makeText(LoginActivity.this,
-                        "Login Successful!",
-                        Toast.LENGTH_SHORT).show();
+        boolean isValid = db.checkUser(email, hashedPassword);
 
-                // Navigate to HomeActivity
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
+        if (isValid) {
 
-                // Close login screen
-                finish();
+            Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
 
-            } else {
-                Toast.makeText(LoginActivity.this,
-                        "Invalid email or password",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+            // Save user session
+            SharedPreferences sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+
+            editor.putInt("user_id", db.getUserIdByEmail(email));
+            editor.putString("username", db.getUsernameByEmail(email));
+
+            editor.apply();
+
+            // Go to Home page
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+
+        } else {
+
+            Toast.makeText(this,
+                    "Invalid email or password",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

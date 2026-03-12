@@ -2,6 +2,7 @@ package com.example.emergencycontacthelper.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,32 +32,47 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         TextView tvLogin = findViewById(R.id.tvLogin);
 
-        // Navigation back to login
+        // Go back to login page
         tvLogin.setOnClickListener(v -> {
             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            finish();
         });
 
-        // Register user
-        btnRegister.setOnClickListener(v -> {
-            String name = etName.getText().toString().trim();
-            String email = etEmail.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
+        btnRegister.setOnClickListener(v -> registerUser());
+    }
 
-            if(name.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
+    private void registerUser() {
 
-            String hashedPassword = PasswordUtils.hashPassword(password);
+        String name = etName.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
 
-            boolean success = db.addUser(name, email, hashedPassword);
-            if(success) {
-                Toast.makeText(this, "Registration Successful!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                finish();
-            } else {
-                Toast.makeText(this, "Registration Failed! Email might already exist.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Enter a valid email address", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (password.length() < 4) {
+            Toast.makeText(this, "Password must be at least 4 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Hash password
+        String hashedPassword = PasswordUtils.hashPassword(password);
+
+        boolean success = db.addUser(name, email, hashedPassword);
+
+        if (success) {
+            Toast.makeText(this, "Registration Successful!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            finish();
+        } else {
+            Toast.makeText(this, "Registration Failed! Email already exists.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

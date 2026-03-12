@@ -29,10 +29,10 @@
         android:id="@+id/btnGoToLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/primaryColor"
+        android:padding="14dp"
         android:text="GET STARTED"
         android:textColor="@color/white"
-        android:textStyle="bold"
-        android:backgroundTint="@color/primaryColor"
-        android:padding="14dp" />
+        android:textStyle="bold" />
 
 </LinearLayout>
